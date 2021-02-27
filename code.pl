@@ -100,6 +100,22 @@ doenca('pneumonia', A) :-
     member('dor no peito', A),
     member('dor de cabeça', A).
 
+home :- write('\n ----Escolha alguma opção---- \n'),
+        write('0. Consultar paciente\n'),
+        write('1. Inserir Paciente \n'),
+        write('2. Alterar Paciente \n'),
+        write('3. Deletar Paciente \n'),
+        write('100. Sair\n'),
+        read(Op),
+        execute(Op).
+
+execute(Op) :- Op == 0, write('Consultando...\n'), home;
+               Op == 1, write('Inserindo...\n'), home;
+               Op == 2, write('Alterando...\n'), home;
+               Op == 3, write('Deletando...\n'), home;
+               Op == 100, true.
+
+
 :- begin_tests(doenca).
 
 test(ansiedade) :- doenca('ansiedade', ['fadiga', 'suor excessivo', 'náusea', 'coração acelerado']).

@@ -76,8 +76,8 @@ doenca('diabetes', A) :-
 
 doenca('hipertensão arterial', A) :-
     member('dor de cabeça', A),
-    member('dor de peito', A),
-    member('dor de braço', A),
+    member('dor no peito', A),
+    member('dor no braço', A),
     member('tontura', A).
 
 doenca('meningite', A) :-
@@ -99,6 +99,20 @@ doenca('pneumonia', A) :-
     member('febre', A),
     member('dor no peito', A),
     member('dor de cabeça', A).
+
+home :- write('\n ----Escolha alguma opção---- \n'),
+        write('0. Consultar paciente\n'),
+        write('1. Inserir Paciente \n'),
+        write('2. Alterar Paciente \n'),
+        write('3. Deletar Paciente \n'),
+        read(Op),
+        execute(Op).
+
+execute(Op) :- Op == 0, write('Consultando...\n'), home;
+               Op == 1, write('Inserindo...\n'), home;
+               Op == 2, write('Alterando...\n'), home;
+               Op == 3, write('Deletando...\n'), home.
+
 
 :- begin_tests(doenca).
 
