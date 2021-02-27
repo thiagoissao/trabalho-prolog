@@ -1,5 +1,6 @@
 :- use_module(library(plunit)).
 :- use_module(library(lists)).
+:- consult(probabilidade).
 
 sintoma('agressão').
 sintoma('adormecimento no rosto').
@@ -38,67 +39,25 @@ sintoma('tosse seca').
 sintoma('tosse com catarro').
 sintoma('vômito').
 
-doenca('ansiedade', A) :-
-    member('fadiga', A),
-    member('suor excessivo', A),
-    member('náusea', A),
-    member('coração acelerado', A).
+doenca('ansiedade', ['fadiga', 'suor excessivo', 'náusea', 'coração acelerado']).
 
-doenca('asma', A) :-
-    member('ansiedade', A),
-    member('tosse seca', A),
-    member('dor no peito', A).
+doenca('asma', ['ansiedade', 'tosse seca', 'dor no peito']).
 
-doenca('autismo', A) :-
-    member('agressão', A),
-    member('grito', A),
-    member('apatia', A).
+doenca('autismo', ['agressão', 'grito', 'apatia']).
 
-doenca('avc', A) :-
-   member('dor de cabeça', A),
-   member('adormecimento no rosto', A),
-   member('tontura', A),
-   member('perda de visão', A).
+doenca('avc', ['dor de cabeça', 'adormecimento no rosto', 'tontura', 'perda de visão']).
 
-doenca('depressão', A) :-
-    member('ansiedade', A),
-    member('apatia', A),
-    member('insônia', A),
-    member('fadiga', A),
-    member('medo', A),
-    member('insegurança', A).
+doenca('depressão', ['ansiedade', 'apatia', 'insônia', 'fadiga', 'medo', 'insegurança']).
 
-doenca('diabetes', A) :-
-   member('fome constante', A),
-   member('formigamento', A),
-   member('perda de peso', A ),
-   member('sede', A).
+doenca('diabetes', ['fome constante', 'formigamento', 'perda de peso', 'sede']).
 
-doenca('hipertensão arterial', A) :-
-    member('dor de cabeça', A),
-    member('dor no peito', A),
-    member('dor no braço', A),
-    member('tontura', A).
+doenca('hipertensão arterial', ['dor de cabeça', 'dor no peito', 'dor no braço', 'tontura']).
 
-doenca('meningite', A) :-
-    member('dor de cabeça', A),
-    member('cansaço', A),
-    member('febre alta', A),
-    member('náusea', A).
+doenca('meningite', ['dor de cabeça', 'cansaço','febre alta', 'náusea']).
 
-doenca('obesidade', A) :-
-    member('artrite', A),
-    member('dor muscular', A),
-    member('pressão alta', A),
-    member('falta de ar', A).
+doenca('obesidade', ['artrite', 'dor muscular', 'pressão alta', 'falta de ar']).
 
-doenca('pneumonia', A) :-
-    member('tosse seca', A),
-    member('tosse com catarro', A),
-    member('falta de ar', A),
-    member('febre', A),
-    member('dor no peito', A),
-    member('dor de cabeça', A).
+doenca('pneumonia', ['tosse seca', 'tosse com catarro', 'falta de ar', 'febre', 'dor no peito', 'dor de cabeça']).
 
 home :- write('\n ----Escolha alguma opção---- \n'),
         write('0. Consultar paciente\n'),
@@ -125,7 +84,7 @@ test(avc) :- doenca('avc', ['dor de cabeça', 'adormecimento no rosto', 'tontura
 test(depressao) :- doenca('depressão', ['ansiedade', 'apatia', 'insônia', 'fadiga', 'medo', 'insegurança' ]).
 test(diabetes) :- doenca('diabetes', ['fome constante', 'formigamento', 'perda de peso', 'sede']).
 test(hipertensaoArterial) :- doenca('hipertensão arterial', ['dor de cabeça', 'dor no peito', 'dor no braço', 'tontura']).
-test(meningite) :- doenca('meningite', ['cansaço', 'dor de cabeça', 'febre alta', 'náusea']).
+test(meningite) :- doenca('meningite', ['dor de cabeça', 'cansaço', 'febre alta', 'náusea']).
 test(obesidade) :- doenca('obesidade', ['artrite', 'dor muscular', 'pressão alta', 'falta de ar']).
 test(pneumonia) :- doenca('pneumonia', ['tosse seca', 'tosse com catarro', 'falta de ar', 'febre', 'dor no peito', 'dor de cabeça']).
 
