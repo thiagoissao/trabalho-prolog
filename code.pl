@@ -68,12 +68,35 @@ home :- write('\n ----Escolha alguma opção---- \n'),
         read(Op),
         execute(Op).
 
-execute(Op) :- Op == 0, write('Consultando...\n'), home;
-               Op == 1, write('Inserindo...\n'), home;
-               Op == 2, write('Alterando...\n'), home;
-               Op == 3, write('Deletando...\n'), home;
+execute(Op) :- Op == 0, write('Consultando...\n'), consultar, home;
+               Op == 1, write('Inserindo...\n'), inserir,  home;
+               Op == 2, write('Alterando...\n'), alterar, home;
+               Op == 3, write('Deletando...\n'), deletar, home;
                Op == 100, true.
 
+get_nome(Nome) :- write('Digite o nome do paciente'), read(Nome).
+
+ler_arquivo :-
+    open('pacientes.txt', read, F),
+    ler_pacientes(F, Pacientes),
+    close(F),
+    write(Pacientes), nl.
+
+ler_pacientes(F, []) :- at_end_of_stream(F).
+ler_pacientes(F, [X | L]) :-
+              \+ at_end_of_stream(F),
+              read(F, X),
+              ler_pacientes(F, L).
+
+consultar :-
+    get_nome(Nome),
+    write(Nome).
+
+inserir :- get_nome(Nome), write(Nome).
+
+alterar :- get_nome(Nome), write(Nome).
+
+deletar :- get_nome(Nome), write(Nome).
 
 :- begin_tests(doenca).
 
