@@ -55,7 +55,6 @@ doenca('pneumonia', ['tosse seca', 'tosse com catarro', 'falta de ar', 'febre al
 
 
 show_doencas_e_probabilidades(Sintomas) :-
-    write(Sintomas),
     doenca('ansiedade', Ansiedade),
     doenca('asma', Asma),
     doenca('autismo', Autismo),
@@ -76,8 +75,9 @@ show_doencas_e_probabilidades(Sintomas) :-
     get_probabilidade_by_sintomas(Sintomas, Meningite, MeningiteProb),
     get_probabilidade_by_sintomas(Sintomas, Obesidade, ObesidadeProb),
     get_probabilidade_by_sintomas(Sintomas, Pneumonia, PneumoniaProb),
-    nl, write('O resultado do protótipo é apenas informativo e que o paciente deve consultar um médico para obter um diagnóstico correto e preciso'), nl,
+    nl, nl, write('O resultado do protótipo é apenas informativo e que o paciente deve consultar um médico para obter um diagnóstico correto e preciso'), nl,
     nl, nl,
+    write(Sintomas), nl,
     write('Ansiedade: '), write(AnsiedadeProb), nl,
     write('Asma: '), write(AsmaProb), nl,
     write('Autismo: '), write(AutismoProb), nl,
@@ -89,6 +89,13 @@ show_doencas_e_probabilidades(Sintomas) :-
     write('Obesidade: '), write(ObesidadeProb), nl,
     write('Pneumonia: '), write(PneumoniaProb),
     nl, nl.
+
+
+inserir_paciente([], X, [X]).
+
+inserir_paciente([PX | Pacientes], P, [PX | L]) :-
+    inserir_paciente(Pacientes, P, L).
+
 
 home :- write('\n ----Escolha alguma opção---- \n'),
         write('0. Consultar paciente\n'),
@@ -127,11 +134,45 @@ consultar :-
 
 inserir :-
     get_nome(Nome),
-    find_paciente(Nome).
+    (   find_paciente(Nome) ->
+        write('Já existe paciente com esse nome, ERRO!'),nl;
+        read_pacientes(Pacientes),
+        inserir_paciente(Pacientes, Nome, NewPacientes),
+        nl,
+        write('Pacientes'),
+        nl,
+        write(NewPacientes),
+        nl,
+        write_pacientes(NewPacientes)
+    ).
 
-alterar :- get_nome(Nome), write(Nome).
+alterar :-
+    get_nome(Nome),
+    (  find_paciente(Nome) ->
+        write('Digite o novo nome para o paciente'),
+        read(NewName),
+        read_pacientes(Pacientes),
+        delete(Pacientes, Nome, PacientesX),
+        inserir_paciente(PacientesX, NewName, NewPacientes),
+        nl,
+        write('Paciente Atualizado!'),
+        nl, write('Nova Listagem'),nl,
+        write(NewPacientes),nl,nl,
+        write_pacientes(NewPacientes);
+        nl,write('Paciente não encontrado!'), nl, nl
+    ).
 
-deletar :- get_nome(Nome), write(Nome).
+deletar :-
+    get_nome(Nome),
+    (   find_paciente(Nome) ->
+        read_pacientes(Pacientes),
+        delete(Pacientes, Nome, NewPacientes),
+        nl, write('Paciente Deletado!'), nl,
+        write(NewPacientes), nl,
+        write_pacientes(NewPacientes);
+        nl,
+        write('Paciente não encontrado, ERRO NA DELEÇÃO!'), nl
+    ).
 
 diagnosticar :-
     get_nome(Nome),
